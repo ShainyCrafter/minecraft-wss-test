@@ -17,21 +17,21 @@ wss.on('connection', (socket, request) => { // connect wsserverコマンドで�
 
           case 'PlayerMessage': //プレイヤーがチャットに発言したとき (このプログラムではsubscribeしてないので動かない)
 
-            if (data.body.properties.Message !== 'close') break;
+            // if (data.body.properties.Message !== 'close') break; // close とチャットに入力すると通信を終了する
 
-            console.log('通信終了');
+            // console.log('通信終了');
 
-            socket.send(JSON.stringify({
-              header: {
-                requestId: uuid.v4(),
-                messagePurpose: 'commandRequest',
-                version: 1
-              },
-              body: {
-                commandLine: 'closewebsocket', // 通信を終了する為のWebSocketサーバー専用のコマンド
-                version: 1
-              }
-            }));
+            // socket.send(JSON.stringify({
+            //   header: {
+            //     requestId: uuid.v4(),
+            //     messagePurpose: 'commandRequest',
+            //     version: 1
+            //   },
+            //   body: {
+            //     commandLine: 'closewebsocket', // 通信を終了する為のWebSocketサーバー専用のコマンド
+            //     version: 1
+            //   }
+            // }));
 
             break;
         }
@@ -50,16 +50,16 @@ wss.on('connection', (socket, request) => { // connect wsserverコマンドで�
 
   const commandRequests = new Map(); // Mapを使うと キー(数値でも文字列でもなんでもいい) ＆ データ をセットで保持できる
 
-  socket.send(JSON.stringify({
-    header: {
-      requestId: uuid.v4(),
-      messagePurpose: 'subscribe',
-      version: 1
-    },
-    body: {
-      eventName: 'PlayerMessage' // 使いたいイベント名
-    }
-  }));
+  // socket.send(JSON.stringify({ // イベントの登録
+  //   header: {
+  //     requestId: uuid.v4(),
+  //     messagePurpose: 'subscribe',
+  //     version: 1
+  //   },
+  //   body: {
+  //     eventName: 'PlayerMessage' // 使いたいイベント名
+  //   }
+  // }));
 
   const requestId = uuid.v4(); // どのコマンドの結果が返ってきたか判別するためのUUID
 
